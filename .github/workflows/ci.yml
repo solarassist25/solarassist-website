@@ -1,0 +1,49 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quality-checks:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Run ESLint
+      run: npm run lint
+      
+    - name: Check required files exist
+      run: |
+        if [ ! -f "index.html" ]; then
+          echo "❌ ERROR: index.html is missing!"
+          exit 1
+        fi
+        if [ ! -f "js/script.js" ]; then
+          echo "❌ ERROR: js/script.js is missing!"
+          exit 1
+        fi
+        if [ ! -f "css/style.css" ]; then
+          echo "❌ WARNING: css/style.css is missing!"
+        fi
+        echo "✅ All required files are present"
+        
+    - name: Validate HTML links
+      run: |
+        if grep -r "xcript.js" .; then
+          echo "❌ ERROR: Found typo 'xcript.js' in files!"
+          exit 1
+        fi
+        echo "✅ No file path typos found"
