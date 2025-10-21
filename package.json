@@ -2,11 +2,10 @@
   "name": "solarassist-website",
   "version": "1.0.0",
   "description": "Professional solar consultation and maintenance services website",
-  "main": "index.html",
+  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'No build process needed for static site'"
   },
   "keywords": [
     "solar",
@@ -16,8 +15,5 @@
     "renewable-energy"
   ],
   "author": "Solar Assist",
-  "license": "MIT",
-  "devDependencies": {
-    "vite": "^4.4.5"
-  }
+  "license": "MIT"
 }
